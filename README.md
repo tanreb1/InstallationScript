@@ -1,3 +1,11 @@
-Forked script from: https://gist.github.com/waleedahmad/a5b17e73c7daebdd048f823c68d1f57a
+# Installation Script
+This script install programs on your pc.
 
-git clone: https://gist.github.com/a5b17e73c7daebdd048f823c68d1f57a.git
+# How to clone
+```
+https://github.com/tanreb1/InstallationScript.git
+```
+
+# Info
+This is fork script from: https://gist.github.com/waleedahmad/a5b17e73c7daebdd048f823c68d1f57a
+
