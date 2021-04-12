@@ -37,7 +37,14 @@ else
 			 25 "Vnstat" off
 			 26 "Webpack" off
 			 27 "Grunt" off
-			 28 "Gulp" off)
+			 28 "Gulp" off
+			 29 "Zephyr" off
+			 30 "Terminator" off
+			 31 "Minicom" off
+			 32 "CuteCom" off
+			 33 "Spotify" off
+			 34 "KeepassXC" off
+			 35 "Gitk" off)
 		choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 		clear
 		for choice in $choices
@@ -46,9 +53,7 @@ else
 	        	1)
 	            		#Install Sublime Text 3*
 				echo "Installing Sublime Text"
-				add-apt-repository ppa:webupd8team/sublime-text-3 -y
-				apt update
-				apt install sublime-text-installer -y
+				snap install sublime-text
 				;;
 
 			2)
@@ -235,6 +240,56 @@ else
 			28)
 				echo "Installing Gulp"
 				npm install gulp -g
+				;;
+			29)
+				#Zephyr
+				echo "Installing Zephyr"
+				apt install --no-install-recommends git cmake ninja-build gperf \
+                               ccache dfu-util device-tree-compiler wget \
+                               python3-dev python3-pip python3-setuptools python3-tk python3-wheel xz-utils file \
+                               make gcc gcc-multilib g++-multilib libsdl2-dev
+                               wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | sudo apt-key add -
+                               apt-add-repository 'deb https://apt.kitware.com/ubuntu/ bionic main'
+                               apt update
+                               apt install cmake
+                               pip3 install --user -U west
+                               echo 'export PATH=~/.local/bin:"$PATH"' >> ~/.bashrc
+                               source ~/.bashrc
+                               west init ~/zephyrproject
+                               cd ~/zephyrproject
+                               west update
+                               west zephyr-export
+                               pip3 install --user -r ~/zephyrproject/zephyr/scripts/requirements.txt
+                               cd ~
+                               wget https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.12.4/zephyr-sdk-0.12.4-x86_64-linux-setup.run
+                               chmod +x zephyr-sdk-0.12.4-x86_64-linux-setup.run
+                               ./zephyr-sdk-0.12.4-x86_64-linux-setup.run -- -d ~/zephyr-sdk-0.12.4
+                               cp ~/zephyr-sdk-0.12.4/sysroots/x86_64-pokysdk-linux/usr/share/openocd/contrib/60-openocd.rules /etc/udev/rules.d
+                               udevadm control --reload
+				;;
+		        30)
+				echo "Terminator"
+				apt install terminator
+				;;
+			31)
+				echo "Minicom"
+				apt install minicom
+				;;
+			32)
+				echo "CuteCom"
+				apt install cutecom
+				;;
+			33)
+				echo "Spotify"
+				snap install spotify
+				;;
+			34)
+				echo "KeepassXC"
+				apt install keepassxc
+				;;
+			35)
+				echo "gitk"
+				apt install gitk
 				;;
 	    esac
 	done
