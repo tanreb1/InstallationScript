@@ -44,7 +44,8 @@ else
 			 32 "CuteCom" off
 			 33 "Spotify" off
 			 34 "KeepassXC" off
-			 35 "Gitk" off)
+			 35 "Gitk" off
+			 36 "Meld" off)
 		choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 		clear
 		for choice in $choices
@@ -290,6 +291,10 @@ else
 			35)
 				echo "gitk"
 				apt install gitk
+				;;
+   		    36)
+				echo "Meld"
+				apt install meld
 				;;
 	    esac
 	done
