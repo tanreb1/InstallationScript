@@ -45,7 +45,8 @@ else
 			 33 "Spotify" off
 			 34 "KeepassXC" off
 			 35 "Gitk" off
-			 36 "Meld" off)
+			 36 "Meld" off
+			 37 "Clang-format" off)
 		choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 		clear
 		for choice in $choices
@@ -295,6 +296,10 @@ else
    		    36)
 				echo "Meld"
 				apt install meld
+				;;
+			37)
+				echo "Clang-format"
+				apt install clang-format
 				;;
 	    esac
 	done
