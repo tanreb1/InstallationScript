@@ -47,6 +47,7 @@ else
 			 35 "Gitk" off
 			 36 "Meld" off
 			 37 "Clang-format" off)
+			 38 "OpenConnect" off)
 		choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 		clear
 		for choice in $choices
@@ -300,6 +301,10 @@ else
 			37)
 				echo "Clang-format"
 				apt install clang-format
+				;;
+			37)
+				echo "OpenConnect"
+				apt install openconnect network-manager-openconnect network-manager-openconnect-gnome
 				;;
 	    esac
 	done
