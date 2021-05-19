@@ -46,8 +46,9 @@ else
 			 34 "KeepassXC" off
 			 35 "Gitk" off
 			 36 "Meld" off
-			 37 "Clang-format" off)
-			 38 "OpenConnect" off)
+			 37 "Clang-format" off
+			 38 "OpenConnect" off
+                         39 "Screen" off)
 		choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 		clear
 		for choice in $choices
@@ -63,30 +64,30 @@ else
 			    	#Install LAMP stack
 				echo "Installing Apache"
 				apt install apache2 -y
-	            
+
     			echo "Installing Mysql Server"
 	 			apt install mysql-server -y
 
         		echo "Installing PHP"
 				apt install php libapache2-mod-php php-mcrypt php-mysql -y
-	            
+
         		echo "Installing Phpmyadmin"
 				apt install phpmyadmin -y
 
 				echo "Cofiguring apache to run Phpmyadmin"
 				echo "Include /etc/phpmyadmin/apache.conf" >> /etc/apache2/apache2.conf
-				
+
 				echo "Enabling module rewrite"
 				sudo a2enmod rewrite
 				echo "Restarting Apache Server"
 				service apache2 restart
 				;;
-    		3)	
+    		        3)
 				#Install Build Essentials
 				echo "Installing Build Essentials"
 				apt install -y build-essential
 				;;
-				
+
 			4)
 				#Install Nodejs
 				echo "Installing Nodejs"
@@ -202,7 +203,7 @@ else
 				apt-get update
 				apt-get install numix-icon-theme numix-icon-theme-circle -y
 				;;
-			19)	
+			19)
 				echo "Installing Multiload Indicator"
 				apt install indicator-multiload -y
 				;;
@@ -294,7 +295,7 @@ else
 				echo "gitk"
 				apt install gitk
 				;;
-   		    36)
+   		        36)
 				echo "Meld"
 				apt install meld
 				;;
@@ -302,10 +303,14 @@ else
 				echo "Clang-format"
 				apt install clang-format
 				;;
-			37)
+			38)
 				echo "OpenConnect"
 				apt install openconnect network-manager-openconnect network-manager-openconnect-gnome
 				;;
+                        39)
+                                echo "Screen"
+                                apt install screen
+                                ;;
 	    esac
 	done
 fi
