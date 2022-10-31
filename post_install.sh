@@ -39,16 +39,19 @@ else
 			 27 "Grunt" off
 			 28 "Gulp" off
 			 29 "Zephyr" off
-			 30 "Terminator" off
-			 31 "Minicom" off
-			 32 "CuteCom" off
-			 33 "Spotify" off
-			 34 "KeepassXC" off
-			 35 "Gitk" off
-			 36 "Meld" off
-			 37 "Clang-format" off
+			 30 "Terminator" yes
+			 31 "Minicom" yes
+			 32 "CuteCom" yes
+			 33 "Spotify" yes
+			 34 "KeepassXC" yes
+			 35 "Gitk" yes
+			 36 "Meld" yes
+			 37 "Clang-format" yes
 			 38 "OpenConnect" off
-                         39 "Screen" off)
+             39 "Screen" yes
+			 40 "Brave" yes
+			 41 "Signal" yes
+			 42 "Rust compiler" yes)
 		choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 		clear
 		for choice in $choices
@@ -71,7 +74,7 @@ else
         		echo "Installing PHP"
 				apt install php libapache2-mod-php php-mcrypt php-mysql -y
 
-        		echo "Installing Phpmyadmin"
+				echo "Installing Phpmyadmin"
 				apt install phpmyadmin -y
 
 				echo "Cofiguring apache to run Phpmyadmin"
@@ -249,68 +252,93 @@ else
 				#Zephyr
 				echo "Installing Zephyr"
 				apt install --no-install-recommends git cmake ninja-build gperf \
-                               ccache dfu-util device-tree-compiler wget \
-                               python3-dev python3-pip python3-setuptools python3-tk python3-wheel xz-utils file \
-                               make gcc gcc-multilib g++-multilib libsdl2-dev
-                               wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | sudo apt-key add -
-                               apt-add-repository 'deb https://apt.kitware.com/ubuntu/ bionic main'
-                               apt update
-                               apt install cmake
-                               pip3 install --user -U west
-                               echo 'export PATH=~/.local/bin:"$PATH"' >> ~/.bashrc
-                               source ~/.bashrc
-                               west init ~/zephyrproject
-                               cd ~/zephyrproject
-                               west update
-                               west zephyr-export
-                               pip3 install --user -r ~/zephyrproject/zephyr/scripts/requirements.txt
-                               cd ~
-                               wget https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.12.4/zephyr-sdk-0.12.4-x86_64-linux-setup.run
-                               chmod +x zephyr-sdk-0.12.4-x86_64-linux-setup.run
-                               ./zephyr-sdk-0.12.4-x86_64-linux-setup.run -- -d ~/zephyr-sdk-0.12.4
-                               cp ~/zephyr-sdk-0.12.4/sysroots/x86_64-pokysdk-linux/usr/share/openocd/contrib/60-openocd.rules /etc/udev/rules.d
-                               udevadm control --reload
+					ccache dfu-util device-tree-compiler wget \
+					python3-dev python3-pip python3-setuptools python3-tk python3-wheel xz-utils file \
+					make gcc gcc-multilib g++-multilib libsdl2-dev
+					wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | sudo apt-key add -
+					apt-add-repository 'deb https://apt.kitware.com/ubuntu/ bionic main'
+					apt update
+					apt install cmake
+					pip3 install --user -U west
+					echo 'export PATH=~/.local/bin:"$PATH"' >> ~/.bashrc
+					source ~/.bashrc
+					west init ~/zephyrproject
+					cd ~/zephyrproject
+					west update
+					west zephyr-export
+					pip3 install --user -r ~/zephyrproject/zephyr/scripts/requirements.txt
+					cd ~
+					wget https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.12.4/zephyr-sdk-0.12.4-x86_64-linux-setup.run
+					chmod +x zephyr-sdk-0.12.4-x86_64-linux-setup.run
+					./zephyr-sdk-0.12.4-x86_64-linux-setup.run -- -d ~/zephyr-sdk-0.12.4
+					cp ~/zephyr-sdk-0.12.4/sysroots/x86_64-pokysdk-linux/usr/share/openocd/contrib/60-openocd.rules /etc/udev/rules.d
+					udevadm control --reload
 				;;
 		        30)
 				echo "Terminator"
-				apt install terminator
+				apt install terminator -y
 				;;
 			31)
 				echo "Minicom"
-				apt install minicom
+				apt install minicom -y
 				;;
 			32)
 				echo "CuteCom"
-				apt install cutecom
+				apt install cutecom -y
 				;;
 			33)
 				echo "Spotify"
-				snap install spotify
+				snap install spotify -y
 				;;
 			34)
 				echo "KeepassXC"
-				apt install keepassxc
+				apt install keepassxc -y
 				;;
 			35)
 				echo "gitk"
-				apt install gitk
+				apt install gitk -y
 				;;
-   		        36)
+			36)
 				echo "Meld"
-				apt install meld
+				apt install meld -y
 				;;
 			37)
 				echo "Clang-format"
-				apt install clang-format
+				apt install clang-format -y
 				;;
 			38)
 				echo "OpenConnect"
 				apt install openconnect network-manager-openconnect network-manager-openconnect-gnome
 				;;
-                        39)
-                                echo "Screen"
-                                apt install screen
-                                ;;
+			39)
+				echo "Screen"
+				apt install screen -y
+				;;
+			40)
+			echo "Brave"
+			sudo apt install apt-transport-https curl -y
+			sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
+			echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
+			sudo apt update
+			sudo apt install brave-browser -y
+			;;
+			41)
+				# 1. Install our official public software signing key
+				wget -O- https://updates.signal.org/desktop/apt/keys.asc | gpg --dearmor > signal-desktop-keyring.gpg
+				cat signal-desktop-keyring.gpg | sudo tee -a /usr/share/keyrings/signal-desktop-keyring.gpg > /dev/null
+
+				# 2. Add our repository to your list of repositories
+				echo 'deb [arch=amd64 signed-by=/usr/share/keyrings/signal-desktop-keyring.gpg] https://updates.signal.org/desktop/apt xenial main' |\
+				  sudo tee -a /etc/apt/sources.list.d/signal-xenial.list
+
+				# 3. Update your package database and install signal
+				sudo apt update && sudo apt install signal-desktop -you
+				;;
+			42)
+				curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+			;;
+			43)
+
 	    esac
 	done
 fi
