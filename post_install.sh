@@ -39,19 +39,19 @@ else
 			 27 "Grunt" off
 			 28 "Gulp" off
 			 29 "Zephyr" off
-			 30 "Terminator" yes
-			 31 "Minicom" yes
-			 32 "CuteCom" yes
-			 33 "Spotify" yes
-			 34 "KeepassXC" yes
-			 35 "Gitk" yes
-			 36 "Meld" yes
-			 37 "Clang-format" yes
+			 30 "Terminator" on
+			 31 "Minicom" on
+			 32 "CuteCom" on
+			 33 "Spotify" on
+			 34 "KeepassXC" on
+			 35 "Gitk" on
+			 36 "Meld" on
+			 37 "Clang-format" on
 			 38 "OpenConnect" off
-             39 "Screen" yes
-			 40 "Brave" yes
-			 41 "Signal" yes
-			 42 "Rust compiler" yes)
+             39 "Screen" on
+			 40 "Brave" on
+			 41 "Signal" on
+			 42 "Rust compiler" on)
 		choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 		clear
 		for choice in $choices
