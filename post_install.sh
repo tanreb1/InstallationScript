@@ -51,7 +51,9 @@ else
              39 "Screen" on
 			 40 "Brave" on
 			 41 "Signal" on
-			 42 "Rust compiler" on)
+			 42 "Rust compiler" on
+			 43 "Docker " on
+			 44 "htop" on)
 		choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 		clear
 		for choice in $choices
@@ -338,7 +340,25 @@ else
 				curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 			;;
 			43)
-
+				sudo apt-get update
+				sudo apt-get install \
+    			ca-certificates \
+    			curl \
+    			gnupg \
+    			lsb-release -y
+				sudo mkdir -p /etc/apt/keyrings
+				curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+				echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+				sudo chmod a+r /etc/apt/keyrings/docker.gpg
+				sudo apt-get update	
+				sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin -y
+				sudo docker run hello-world
+				;;
+			44) 
+				sudo apt install htop -y
+				;;
 	    esac
 	done
 fi
